@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ynadime <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ynadime <ynadime@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 12:09:06 by ynadime           #+#    #+#             */
-/*   Updated: 2024/11/30 12:09:08 by ynadime          ###   ########.fr       */
+/*   Updated: 2025/05/10 19:20:31 by ynadime          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,23 @@ char	*setline(char **stock)
 	char	*newline;
 	char	*line;
 
+	if (!*stock)
+		return (NULL);
 	newline = ft_strchr(*stock, '\n');
 	if (newline)
 	{
 		line = ft_substr(*stock, 0, (newline - *stock) + 1);
 		tmp = *stock;
-		*stock = ft_strdup(newline + 1);
-		free(tmp);
-		return (line);
+		if (*(newline + 1))
+			*stock = ft_strdup(newline + 1);
+		else
+			*stock = NULL;
+		return (free(tmp), line);
 	}
 	else if (**stock)
 	{
 		line = ft_strdup(*stock);
-		free(*stock);
-		*stock = NULL;
-		return (line);
+		return (free(*stock), *stock = NULL, line);
 	}
 	free(*stock);
 	*stock = NULL;
